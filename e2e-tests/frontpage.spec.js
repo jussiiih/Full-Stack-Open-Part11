@@ -7,4 +7,10 @@ describe('Pokedex', () => {
     await expect(page.getByText('ivysaur')).toBeVisible()
     await expect(page.getByText('Pokémon and Pokémon character names are trademarks of Nintendo.')).toBeVisible()
   })
+
+  test('pokemon paga can be navigated to', async ({ page }) => {
+    await page.goto('')
+    await page.getByRole('link', { name: 'ivysaur' }).click()
+    await expect(page.getByText('chlorophyll')).toBeVisible()
+  })
 })
