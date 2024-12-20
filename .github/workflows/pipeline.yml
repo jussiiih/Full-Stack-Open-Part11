@@ -50,7 +50,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: Build Failed ${{ github.repository }}. ${{ github.actor }} broke the build. Commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          args: Build Failed **${{ github.repository }}**. ${{ github.actor }} broke the build. Commit [https://github.com/${{ github.repository }}/commit/${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
             
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
