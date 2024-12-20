@@ -38,16 +38,14 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip')}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       - name: Discord Webhook Notify on success
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
       - name: Discord Webhook Notify on failure in build
         if: ${{ steps.build.outcome == 'failure' }}
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
             
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
