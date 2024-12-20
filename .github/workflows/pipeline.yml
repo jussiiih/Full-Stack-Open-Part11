@@ -41,11 +41,13 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
       - name: Discord Webhook Notify on failure in build
         if: ${{ steps.build.outcome == 'failure' }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
             
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
