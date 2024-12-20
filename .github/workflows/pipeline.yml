@@ -45,7 +45,7 @@ jobs:
         with:
           args: A new version of **${{ github.repository }}** has been deployed by ${{ github.actor }} to https://full-stack-open-part11-bj2u.onrender.com/
       - name: Discord Webhook Notify on failure in build
-        if: ${{ steps.build.outcome == 'failure' }}
+        if: ${{ failure() && steps.build.outcome == 'failure' }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
