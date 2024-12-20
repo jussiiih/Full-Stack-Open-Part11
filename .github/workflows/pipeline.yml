@@ -41,6 +41,8 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
+        with:
+          args: 'Deployment successful'
       - name: Discord Webhook Notify on failure in build
         if: ${{ steps.build.outcome == 'failure' }}
         env:
