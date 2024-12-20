@@ -1,5 +1,8 @@
 name: Deployment pipeline
 
+env:
+  CONDITION: ${{ contains( toJson(github.event.commits.*.message), '#skip') }}
+
 on:
   push:
     branches:
@@ -37,9 +40,10 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Trigger deployment
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && github.env.CONDIITON == 'true'}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
   tag_release:
+    if: ${{ github.env.CONDITION == 'true'}}
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
     steps:
